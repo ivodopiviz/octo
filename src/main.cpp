@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
 	if (argc < 2)
 	{
-		printf("Usage: chip8.exe rom\n");
+		printf("Usage: octo.exe rom\n");
 		return 1;
 	}
 

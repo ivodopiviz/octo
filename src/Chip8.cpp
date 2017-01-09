@@ -359,7 +359,7 @@ void Chip8::emulateCycle()
 	if (_soundTimer > 0)
 	{
 		if (_soundTimer == 1)
-			printf("BEEP!\n");
+			printf("Beep!\n");
 		--_soundTimer;
 	}
 }
