@@ -6,8 +6,7 @@
 #define SCREEN_HEIGHT 32
 
 Chip8 chip8;
-//int zoom = 10;
-int zoom = 1;
+int zoom = 10;
 
 // Window size
 int display_width = SCREEN_WIDTH * zoom;
@@ -32,6 +31,8 @@ int main(int argc, char* argv[])
 	SDL_Renderer *renderer;
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_CreateWindowAndRenderer(display_width, display_height, 0, &window, &renderer);
+	SDL_SetWindowTitle(window, "Octo");
+	SDL_RenderSetScale(renderer, zoom, zoom);
 	
 	if (window == NULL) 
 	{
