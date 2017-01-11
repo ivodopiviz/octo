@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SDL.h"
+#include "nfd.h"
 #include "Chip8.h"
 
 #define SCREEN_WIDTH 64

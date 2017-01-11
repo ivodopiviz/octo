@@ -7,8 +7,8 @@ workspace "Octo"
       kind "ConsoleApp"
       language "C++"
       files { "**.h", "**.cpp" }
-	  includedirs { "depend/SDL2-2.0.5/include" }
-	  libdirs { "depend/SDL2-2.0.5/lib/x86" }
+	  includedirs { "depend/SDL2-2.0.5/include", "depend/nativefiledialog-master/src/include" }
+	  libdirs { "depend/SDL2-2.0.5/lib/x86", "depend/nativefiledialog-master/build/lib/Release/x86" }
       debugargs { "pong2.c8" }
       debugdir "../"
 	  targetdir ("../")
@@ -17,9 +17,9 @@ workspace "Octo"
          defines { "DEBUG" }
          flags { "Symbols" }
    		 targetsuffix "_d"
-		 links { "SDL2", "SDL2main" }
+		 links { "SDL2", "SDL2main", "nfd" }
 
       filter "configurations:Release"
          defines { "NDEBUG" }
          optimize "On"
-		 links { "SDL2", "SDL2main" }
+		 links { "SDL2", "SDL2main", "nfd" }
