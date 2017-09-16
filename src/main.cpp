@@ -9,9 +9,9 @@
 Chip8 chip8;
 int zoom = 10;
 
-// Window size
-int display_width = SCREEN_WIDTH * zoom;
-int display_height = SCREEN_HEIGHT * zoom;
+// window size
+float display_width = SCREEN_WIDTH * zoom;
+float display_height = SCREEN_HEIGHT * zoom;
 
 int main(int argc, char* argv[]) 
 {
@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// Load game
+	// load game
 	if (!chip8.loadApplication(argv[1]))
 		return 1;
 
@@ -30,11 +30,26 @@ int main(int argc, char* argv[])
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO);
 	SDL_CreateWindowAndRenderer(display_width, display_height, 0, &window, &renderer);
 	SDL_SetWindowTitle(window, "Octo");
 	SDL_RenderSetScale(renderer, zoom, zoom);
-	
+
+	// load resources
+	Uint8 *beepBuffer;
+	Uint32 beepLength;
+	SDL_AudioSpec beepSpec;
+
+	if (SDL_LoadWAV("resources/beep.wav", &beepSpec, &beepBuffer, &beepLength) == NULL) {
+		printf("Could not load beep wav: %s\n", SDL_GetError());
+		return 1;
+	}
+
+	if (SDL_OpenAudio(&beepSpec, NULL) < 0) {
+		printf("Could not open audio device: %s\n", SDL_GetError());
+		return -1;
+	}
+
 	if (window == NULL) 
 	{
 		printf("Could not create window: %s\n", SDL_GetError());

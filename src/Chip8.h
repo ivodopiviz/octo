@@ -1,3 +1,8 @@
+#ifndef CHIP8_H
+#define CHIP8_H
+
+#include "SDL.h"
+
 class Chip8 {
 public:
 	Chip8();
@@ -11,6 +16,8 @@ public:
 
 	unsigned char gfx[64 * 32];
 	unsigned char key[16];
+
+
 
 private:
 	unsigned short _pc;
@@ -27,3 +34,5 @@ private:
 
 	void init();
 };
+
+#endif

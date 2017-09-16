@@ -363,11 +363,7 @@ void Chip8::emulateCycle()
 	{
 		if (_soundTimer == 1) 
 		{
-#ifdef _WIN32
-			Beep(750, 300); // TODO: make this portable
-#else
 			printf("Beep!");
-#endif
 		}
 			
 		--_soundTimer;
