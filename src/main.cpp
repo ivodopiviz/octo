@@ -16,14 +16,23 @@ int display_height = SCREEN_HEIGHT * zoom;
 
 int main(int argc, char* argv[]) 
 {
-	if (argc < 2)
+	char* fileName = NULL;
+
+	if (argc >= 2)
 	{
-		printf("Usage: octo.exe rom\n");
-		return 1;
+		fileName = argv[1];
+	}
+	else
+	{
+		nfdresult_t result = NFD_OpenDialog("c8", NULL, &fileName);
+		if (result == NFD_CANCEL)
+		{
+			return 1;
+		}
 	}
 
 	// load game
-	if (!chip8.loadApplication(argv[1]))
+	if (!chip8.loadApplication(fileName))
 		return 1;
 
 	bool quit = false;

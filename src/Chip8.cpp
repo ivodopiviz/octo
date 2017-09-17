@@ -384,7 +384,7 @@ void Chip8::debugRender()
 	printf("\n");
 }
 
-bool Chip8::loadApplication(const char * filename)
+bool Chip8::loadApplication(const char* filename)
 {
 	init();
 	printf("Loading: %s\n", filename);
