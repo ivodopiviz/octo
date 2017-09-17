@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#ifdef _WIN32
-#include <Windows.h> // TODO: make this portable
-#endif
 
 unsigned char chip8Font[80] =
 {
@@ -62,6 +59,7 @@ void Chip8::init()
 	_soundTimer = 0;
 
 	drawFlag = true;
+	beepFlag = false;
 	srand(time(NULL));
 }
 
@@ -363,7 +361,7 @@ void Chip8::emulateCycle()
 	{
 		if (_soundTimer == 1) 
 		{
-			printf("Beep!");
+			beepFlag = true;
 		}
 			
 		--_soundTimer;

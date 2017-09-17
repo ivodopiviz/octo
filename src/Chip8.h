@@ -9,6 +9,7 @@ public:
 	~Chip8();
 
 	bool drawFlag;
+	bool beepFlag;
 
 	void emulateCycle();
 	void debugRender();
@@ -16,8 +17,6 @@ public:
 
 	unsigned char gfx[64 * 32];
 	unsigned char key[16];
-
-
 
 private:
 	unsigned short _pc;

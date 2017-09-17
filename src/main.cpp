@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SDL.h"
+#include "SDL_mixer.h"
 #include "nfd.h"
 #include "Chip8.h"
 
@@ -10,8 +11,8 @@ Chip8 chip8;
 int zoom = 10;
 
 // window size
-float display_width = SCREEN_WIDTH * zoom;
-float display_height = SCREEN_HEIGHT * zoom;
+int display_width = SCREEN_WIDTH * zoom;
+int display_height = SCREEN_HEIGHT * zoom;
 
 int main(int argc, char* argv[]) 
 {
@@ -35,20 +36,14 @@ int main(int argc, char* argv[])
 	SDL_SetWindowTitle(window, "Octo");
 	SDL_RenderSetScale(renderer, zoom, zoom);
 
-	// load resources
-	Uint8 *beepBuffer;
-	Uint32 beepLength;
-	SDL_AudioSpec beepSpec;
+	Mix_Chunk* beep;
 
-	if (SDL_LoadWAV("resources/beep.wav", &beepSpec, &beepBuffer, &beepLength) == NULL) {
-		printf("Could not load beep wav: %s\n", SDL_GetError());
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
 		return 1;
 	}
 
-	if (SDL_OpenAudio(&beepSpec, NULL) < 0) {
-		printf("Could not open audio device: %s\n", SDL_GetError());
-		return -1;
-	}
+	beep = Mix_LoadWAV("resources/beep.wav");
 
 	if (window == NULL) 
 	{
@@ -139,10 +134,17 @@ int main(int argc, char* argv[])
 			}
 
 		SDL_RenderPresent(renderer);
+
+		if (chip8.beepFlag)
+		{
+			Mix_PlayChannel(-1, beep, 0);
+			chip8.beepFlag = false;
+		}
 	}
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	Mix_FreeChunk(beep);
 
 	SDL_Quit();
 	return 0;
